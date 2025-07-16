@@ -13,12 +13,23 @@ sudo echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Install eksctl
-sudo ARCH=amd64
-sudo PLATFORM=$(uname -s)_$ARCH
-sudo curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
-sudo curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
-sudo tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+# Set variables in your current shell (no sudo needed here)
+ARCH=amd64
+PLATFORM="$(uname -s)_$ARCH"
+
+# Download the tar.gz
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+
+# Verify checksum
+curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" \
+| grep "eksctl_$PLATFORM.tar.gz" \
+| sha256sum --check
+
+# Extract and install
+sudo tar -xzf "eksctl_$PLATFORM.tar.gz" -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
+rm "eksctl_$PLATFORM.tar.gz"
+
 
 # Install docker
 sudo apt-get update
