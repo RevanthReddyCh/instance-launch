@@ -6,6 +6,8 @@ resource "aws_instance" "public_instance" {
   vpc_security_group_ids = ["${aws_security_group.allow_all_traffic.id}"]
 
   key_name      = "us-east-2"
+  user_data = file("${path.module}/userdata.sh")
+
 
   tags = {
     Name = "starbucks"
