@@ -10,7 +10,7 @@ resource "aws_instance" "public_instance" {
 
 
   tags = {
-    Name = "starbucks"
+    Name = "atlantis"
   }
 
 }
