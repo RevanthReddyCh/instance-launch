@@ -4,4 +4,5 @@ resource "aws_internet_gateway" "usw2_gateway" {
   tags = {
     Name = "use2-igw"
   }
+
 }
