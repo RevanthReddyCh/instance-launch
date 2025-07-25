@@ -5,7 +5,7 @@ resource "aws_route_table" "public_route_table" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.usw2_gateway.id
   }
-  
+
   tags = {
     Name = "PublicRouteTable"
   }
